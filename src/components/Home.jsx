@@ -23,13 +23,16 @@ const Home = () => {
   // Controls modal for add thread
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useEffect(async () => {
-    try {
-      const snapshot = await getThreads();
-      setThreads(snapshot.docs);
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const snapshot = await getThreads();
+        setThreads(snapshot.docs);
+      } catch(err){
+        console.error(err);
+      }
     }
+    fetchData();
   }, []);
 
   return (

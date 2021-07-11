@@ -11,6 +11,7 @@ import {
   Heading,
   Text,
   Link,
+  Flex,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import FormAlert from "./FormAlert";
@@ -106,14 +107,16 @@ const LoginCard = ({ children }) => {
   );
 };
 
-const LoginHeader = () => {
+const LoginHeading = () => {
   return (
-    <>
-      <Heading textAlign="center" size="xl" fontWeight="extrabold">
+    <Flex direction="column" align="center">
+    <Heading textAlign="center" size="xl" fontWeight="extrabold">
         Sign in to your account
       </Heading>
-      <Text align="center" fontWeight="medium" maxW="md" mt="4" mb="8">
-        <Text as="span">Don't have an account? </Text>
+
+      <Text  textAlign="center" fontWeight="medium" maxW="md" mt="4" mb="8">
+        
+        <Text  as="span" >Don't have an account? </Text>
         <Link
           as={RouterLink}
           to="/register"
@@ -122,14 +125,19 @@ const LoginHeader = () => {
         >
           Register
         </Link>
+        
       </Text>
-    </>
+      </Flex>
+        
+    
+      
+    
   );
 };
 const Login = () => {
   return (
-    <Box maxW="md" mx="auto">
-      <LoginHeader />
+    <Box maxW={["xs", "sm", "md"]} mx="auto">
+      <LoginHeading />
       <LoginCard>
         <LoginForm />
       </LoginCard>

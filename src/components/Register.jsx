@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Heading,
@@ -27,7 +27,6 @@ import { useAuth } from "./AuthContext";
 import FormAlert from "./FormAlert";
 
 const RegisterForm = () => {
-  const [submitError, setSubmitError] = useState("");
   const { signup } = useAuth();
   const history = useHistory();
 
@@ -174,7 +173,7 @@ const RegisterHeading = () => {
 
 const Register = () => {
   return (
-    <Box maxW="md" mx="auto">
+    <Box maxW={["xs", "sm", "md"]} mx="auto">
       <RegisterHeading />
       <RegisterCard>
         <RegisterForm />
