@@ -21,7 +21,6 @@ import {
   validateConfirmPassword,
 } from "../validate";
 
-import { addUser } from "../firebase";
 import { useAuth } from "./AuthContext";
 
 import FormAlert from "./FormAlert";
@@ -37,8 +36,10 @@ const RegisterForm = () => {
         actions.setSubmitting(true);
         try {
           actions.setSubmitting(true);
-          await signup(values.email, values.password);
-          addUser(values.email, values.username, values.password);
+          await signup(values.email, values.password).then((res) =>
+            res.user.updateProfile({ displayName: values.username })
+          );
+
           actions.setSubmitting(false);
           history.push("/");
         } catch (err) {
@@ -169,7 +170,6 @@ const RegisterHeading = () => {
     </>
   );
 };
-
 
 const Register = () => {
   return (

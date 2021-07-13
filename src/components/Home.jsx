@@ -5,21 +5,23 @@ import NewThreadModal from "./NewThreadModal";
 
 import {
   Box,
-  List,
   Button,
-  ListItem,
   IconButton,
   Flex,
   Heading,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
+
+import ThreadCard from "./ThreadCard";
 
 const Home = () => {
   // Our threads
   const [threads, setThreads] = useState([]);
+  const [loading, setLoading] = useState(true);
   // For signing out
-  const { signout } = useAuth();
+  const { signout, currentUser } = useAuth();
   // Controls modal for add thread
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -28,45 +30,60 @@ const Home = () => {
       try {
         const snapshot = await getThreads();
         setThreads(snapshot.docs);
-      } catch(err){
+        setLoading(false);
+      } catch (err) {
         console.error(err);
       }
-    }
+    };
     fetchData();
   }, []);
 
   return (
-    <Box maxW="xxl" mx="4">
-      <Flex my="2" justify="space-between">
-        <Heading>Threads</Heading>
-        <Button colorScheme="red" onClick={() => signout()}>
-          Logout
-        </Button>
-      </Flex>
-
-      <Box bg="white" py="8" px="4" shadow="base" rounded="lg">
-        <List>
-          {threads.map((thread) => (
-            <ListItem key={thread.id}>{thread.data().subject}</ListItem>
-          ))}
-        </List>
-      </Box>
-      <Box bg="white" py="4" px="4" my="2" shadow="base" rounded="lg">
-        <Flex justify="space-between" alignItems="center">
-          <Flex>
-            <Button onClick={onOpen} colorScheme="blue" px="8" mx="4">
+    <Flex direction="column" maxW="xxl" mx="8" border="1px solid red">
+      <Flex direction="column">
+        <Flex my="2" justify="space-between" align="center">
+          <Heading>Threads</Heading>
+          <Text>Logged in as: {currentUser.displayName}</Text>
+          <Box>
+            <Button onClick={onOpen} colorScheme="blue" px="8" mr="2">
               Add Thread
             </Button>
-            <NewThreadModal isOpen={isOpen} onClose={onClose} />
-          </Flex>
+            <Button colorScheme="red" onClick={() => signout()}>
+              Logout
+            </Button>
+          </Box>
+        </Flex>
+        <Flex direction="column">
+          {!loading ? (
+            threads.map((thread) => (
+              <ThreadCard
+                key={thread.id}
+                threadId={thread.id}
+                subject={thread.data().subject}
+              />
+            ))
+          ) : (
+            <h1>Loading...</h1>
+          )}
+        </Flex>
+      </Flex>
 
-          <Box>
-            <IconButton mx="2" colorScheme="blue" icon={<ArrowLeftIcon />} />
-            <IconButton mx="2" colorScheme="blue" icon={<ArrowRightIcon />} />
+      <Box>
+        <Flex justify="space-between" alignItems="center">
+          <Flex>
+            <NewThreadModal
+              isOpen={isOpen}
+              onClose={onClose}
+              user={currentUser}
+            />
+          </Flex>
+          <Box mt="2">
+            <IconButton mr="2" colorScheme="blue" icon={<ArrowLeftIcon />} />
+            <IconButton colorScheme="blue" icon={<ArrowRightIcon />} />
           </Box>
         </Flex>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

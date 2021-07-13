@@ -110,13 +110,12 @@ const LoginCard = ({ children }) => {
 const LoginHeading = () => {
   return (
     <Flex direction="column" align="center">
-    <Heading textAlign="center" size="xl" fontWeight="extrabold">
+      <Heading textAlign="center" size="xl" fontWeight="extrabold">
         Sign in to your account
       </Heading>
 
-      <Text  textAlign="center" fontWeight="medium" maxW="md" mt="4" mb="8">
-        
-        <Text  as="span" >Don't have an account? </Text>
+      <Text textAlign="center" fontWeight="medium" maxW="md" mt="4" mb="8">
+        <Text as="span">Don't have an account? </Text>
         <Link
           as={RouterLink}
           to="/register"
@@ -125,13 +124,8 @@ const LoginHeading = () => {
         >
           Register
         </Link>
-        
       </Text>
-      </Flex>
-        
-    
-      
-    
+    </Flex>
   );
 };
 const Login = () => {
