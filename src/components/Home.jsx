@@ -39,7 +39,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Flex direction="column" maxW="xxl" mx="8" border="1px solid red">
+    <Flex direction="column" maxW="xxl" mx="8">
       <Flex direction="column">
         <Flex my="2" justify="space-between" align="center">
           <Heading>Threads</Heading>
